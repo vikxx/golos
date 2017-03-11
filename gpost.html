@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<title>Golos POST</title>
+<style>#map{width:100%;height:300px}#mapCanvas{width:100%;height:400px}input#postingkey{display:block;width:100%}input{margin:5px 0}p.help{background:#f9f9f9;color:#868686;padding:5px;border-radius:3px}.drdrop{padding:10px 0;border-radius:5px}body{font-family:Arial,Helvetica,sans-serif;color:grey}#text-editor,input{background:#f7f7f7;border:0;box-shadow:inset 0 0 10px -5px #000;color:#000;padding:5px;border-radius:5px}input#permlink,input#topic{font-size:15px;padding:0 10px;border-radius:30px 0}input#permlink{height:18px;margin-right:10px}#addimg.loading{background:url(https://s3.postimg.org/ejg32n7er/loading.gif);transition:2s all ease;height:50px}#addimg.loading.hasload{background:#36c77f;height:auto}input#topic{height:18px}.drdrop span{background:#7aa8ff;border:0;padding:10px;color:#fff;border-radius:3px;box-shadow:0 0 16px -7px #000;cursor:pointer}#text-editor img{max-width:100%;height:auto}#text-editor{background:#f7f7f7;min-height:200px;border-radius:5px;padding:1px 10px}.golos-form{padding:5%}#alerts{background: #e6e6e6; color: #777; font-size: 18px; border-radius: 3px; padding: 20px;}input#post-golos-title{width:100%;margin:10px auto;padding:5px;border-radius:5px;font-size:1rem}.golos-form .mce-panel{border-radius:3px;margin:10px auto}.golos-form input[type=submit]{cursor:pointer;background:#248eff;border:0;display:block;margin:20px auto;padding:10px;width:160px;border-radius:3px;color:#fff;box-shadow:0 0 10px -5px #000}</style>
+<meta name="Description" content="Мультиплатформенная публикация постов в голос + встроенный фотохостинг">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<link rel="icon" type="image/x-icon" href="https://golos.io/images/favicons/favicon.ico"/>
+<script src="https://golos.rubtc.info/wp-content/plugins/golos/golos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sjcl/1.0.6/sjcl.min.js"></script>
+</head>
+<body>
+<div class="golos-form">
+ <h2>Постинг в голос</h2>
+			<h3>С помощью данной страницы вы можете записать в блокчейн голоса свой пост. В редактор встроен фотохостинг.</h3>
+<div class="notice">
+<p class="help">Канал в телеграмм - <a href="https://web.telegram.org/#/im?p=@viknews">@viknews</a></p>
+<p class="help">Обратная связь - <a href="https://web.telegram.org/#/im?p=@vikxx">@vikxx</a></p>
+</div>
+
+
+
+
+<form id="post-golos-form" enctype="multipart/form-data">
+<h2>Опубликовать пост в голосе</h2>
+		    <input type="text" name="post-golos-title" id="post-golos-title" required aria-required="true" placeholder="Заголовок">
+		   
+			
+
+<div class="drdrop"><span id="addimg" onclick="document.querySelector('#loadinp').click()">Загрузить фото</span></div><input id="loadinp" style="visibility: collapse; width: 0px;" type="file" onchange="upload(this.files[0])">
+<div id="text-editor"></div>
+<p>В поле топика, тегов и логина допускаются только латинские маленькие буквы или дефис. Что бы поместить тег на русском найдите его аналог на голосе в формате <i>ru--</i>
+</br>Например тег голос выглядит как <b>ru--golos</b>.</p>
+
+ 
+<input type="text" id="username" name="username" required aria-required="true" placeholder="Логин">
+
+
+<input type="password" id="postingkey" name="postingkey" title="Никому не сообщайте свой ключ!" placeholder="Постинг ключ"/>
+ 
+ <p>golos.io/<input title="Допускаются только латинские маленькие буквы или дефис" type="text" id="topic" name="topic" required aria-required="true" placeholder="ru--golos (топик)" pattern="[a-z0-9-]+"/><input type="text" id="permlink" name="permlink" required aria-required="true" placeholder="permlink (ссылка на пост)" pattern="[a-z0-9-]+"/></p>
+<b>По поводу полей "топик" и "ссылка" - представим как обычно выглядит ссылка на ваш пост.
+ Например - <em>golos.io/ru--golos/@vik/testpost</em>. В данной ссылке ru--golos - это транслит тега Голос, а testpost постоянная ссылка на пост. В классическом клиенте голоса ссылка формируется автоматически из заголовка поста, длинная, уродливая версия вашего заголовка в транслите, в моем редакторе вы должны сами придумать ссылку - лаконичную и удобную. </b>
+ 
+<p> <input type="text" id="tag1" name="tag1" placeholder="Тег 1" pattern="[a-z0-9-]+">
+<input type="text" id="tag2" name="tag2"  placeholder="Тег 2" pattern="[a-z0-9-]+">
+<input type="text" id="tag3" name="tag3"  placeholder="Тег 3" pattern="[a-z0-9-]+">	</p>	
+		<input type="submit" value="Отправить">
+</form>
+<div id="alerts"></div>
+</div>
+
+<script>
+
+
+jQuery(document).ready( function( $ ) {
+	tinymce.init( {
+		selector:'#text-editor',       
+		
+	
+		height: 300,
+  menubar: false,
+  plugins: [
+    'autosave save advlist autolink lists link image charmap print preview hr anchor',
+    'searchreplace wordcount visualchars code fullscreen',
+    'insertdatetime save table contextmenu directionality',
+    'emoticons paste imagetools codesample toc'
+  ],
+  toolbar1: 'undo redo | insert | bold italic | bullist numlist | link image',
+  toolbar2: 'print preview media | emoticons | codesample | code',
+  
+  
+  image_advtab: true,
+		save_enablewhendirty: true,
+		save_onsavecallback: function () { console.log('Saved'); },
+		
+	
+  language: 'ru',
+  language_url:'https://golos.rubtc.info/ru.js',
+  paste_data_images: true
+ 
+    } );
+});
+
+
+window.ondragover = function(e) {e.preventDefault()}
+    window.ondrop = function(e) {e.preventDefault(); upload(e.dataTransfer.files[0]); }
+    function upload(file) {
+        if (!file || !file.type.match(/image.*/)) return;
+        document.getElementById("addimg").classList.add('loading');
+        var fd = new FormData(); 
+        fd.append("image", file); 
+        var xhr = new XMLHttpRequest(); 
+        xhr.open("POST", "https://api.imgur.com/3/image.json"); 
+        xhr.onload = function() {
+            var imgurl = JSON.parse(xhr.responseText).data.link;
+			var ed = tinyMCE.get('text-editor');                // get editor instance
+			var newNode = ed.getDoc().createElement ( "img" );  // create img node
+			newNode.src=imgurl;                           // add src attribute
+			ed.execCommand('mceInsertContent', false, newNode.outerHTML)
+			document.getElementById("addimg").classList.add('hasload');
+			
+			
+        }
+        xhr.setRequestHeader('Authorization', 'Client-ID 28aaa2e823b03b1'); 
+        xhr.send(fd);
+    }
+var s;	
+var tag1= "",tag2="",tag3="";
+
+if("postK" in localStorage){
+    document.getElementById('postingkey').placeholder = 'Ваш постинг ключ был введен ранее, сейчас зашифрован и сохранен';
+} else {
+   
+}
+
+
+// Запускаем функцию нажатием submit в форме #post-golos-form
+jQuery( '#post-golos-form' ).on( 'submit', function(e) {
+        e.preventDefault();
+		// Записываем в переменные содержимое полей
+		 var t = document.getElementById("post-golos-title").value,
+			 // Вытаскиваем наш контент из редактора в переменную post_body
+			 post_body = tinyMCE.activeEditor.getContent(),
+			 u = document.getElementById("username").value;
+			
+			steem.api.getAccounts([u], function(err, result) {
+				s = result[0].memo_key;
+			
+			postingKey = document.getElementById("postingkey").value;
+			
+			if (postingKey.length > 20){
+			//encryption
+			postK = sjcl.encrypt(s, postingKey);
+
+			//storing to local storage
+			localStorage.setItem("postK", postK);
+			}
+			// retrieve from local storage
+			var enK = localStorage.getItem("postK");
+			// decrypt
+			var k = sjcl.decrypt(s, enK);
+			
+			
+			 permlink = document.getElementById("permlink").value,
+
+			 tag1 = document.getElementById("tag1").value,
+			 tag2 = document.getElementById("tag2").value,
+			 tag3 = document.getElementById("tag3").value,
+			 topic = document.getElementById("topic").value,
+			 //tags = document.getElementById("tags").value,
+			 jsonMetadata = {"tags":["vikposting",tag1,tag2,tag3]},
+			 parentAuthor = '', 
+	         parentPermlink = topic;
+			 steem.broadcast.comment(
+					k,parentAuthor, parentPermlink, 
+						u, 
+						permlink, 
+						t, 
+						post_body, 
+					jsonMetadata, 
+					function(err, result) {
+					  console.log(err,result);
+					  // В случае ошибок - отразим их под формой
+					  if(err != null){
+					  document.getElementById('alerts').innerHTML = ('<blockquote>'+err+'</blockquote>'); 
+					  }
+					  if(result != null){
+					  document.getElementById('alerts').innerHTML = ('<blockquote>Ошибок не выявлено, проверьте наличие поста - <a href="https://golosdb.com/'+topic+'/@'+u+'/'+permlink+'">golosdb.com/'+topic+'/@'+u+'/'+permlink+'</a>. Что бы отредактировать пост - просто нажмите кнопку отправить еще раз - это заменит содержимое поста на текущее содержимое редактора, важно, что бы вы не меняли ссылку "'+permlink+'". Заменив ссылку - будет создан новый пост, вместо редакции существующего</blockquote>'); 
+					  }
+					  
+					});
+		});			
+});
+
+    
+</script>
+</body>
+</html>
