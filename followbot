@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<title>BotBro</title>
+<style>h2,span{display:inline-block;text-transform:uppercase}.text:focus+span,span{opacity:.6}.custom-checkbox,.login,span{position:relative}.signin,h2,span{text-transform:uppercase}.custom-checkbox:focus,.signin:focus{outline:0}.signin,body{background-color:#d3d3d3;font-family:Montserrat,sans-serif;color:#fff;font-size:14px;letter-spacing:1px}body{background:url(https://golos.rubtc.info/wp-content/uploads/2017/02/hex.jpg) #fff;padding:20px 5px}.login{min-height:560px;width:405px;margin:0;padding:20px;box-shadow:0 30px 60px -5px #000}form{padding-top:80px}.active{border-bottom:2px solid #1161ed;color:#fff}.nonactive{color:rgba(255,255,255,.2)}h2{padding-left:12px;font-size:22px;padding-bottom:5px;letter-spacing:2px;font-weight:100}h2:first-child{padding-left:0}.signin,.text{padding:10px 20px;transition:all .5s ease-in-out}span{font-size:12px;top:-20px;transition:all .5s ease-in-out}.text{border:none;width:89%;display:block;height:40px;border-radius:20px;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,0);overflow:hidden;margin-top:15px}.custom-checkbox,input,label{display:inline-block}.text:focus{outline:0;border:2px solid rgba(255,255,255,.5);border-radius:20px;background:rgba(0,0,0,0)}input[type=text],input[type=password]{font-family:Montserrat,sans-serif;color:#fff}input{padding-top:20px;font-size:14px}.custom-checkbox,h2,span{margin-left:20px}.custom-checkbox{-webkit-appearance:none;background-color:rgba(255,255,255,.1);padding:8px;border-radius:2px;top:6px}.custom-checkbox:checked{background-color:rgba(17,97,237,1)}.custom-checkbox:checked:after{content:'\2714';font-size:10px;position:absolute;top:1px;left:4px;color:#fff}#item,a,hr{position:relative}label{padding-top:10px;padding-left:5px}.signin{background-color:#1161ed;color:#FFF;width:100%;display:block;height:39px;border-radius:20px;margin-top:30px;border:none}a,input.text{color:#fff}#err,#item{margin:5px}#nicedata,#nicedata #item,#nicedata #item.anim,#nicedata.bg,.login{transition:1s all ease}.signin:hover{background:#4082f5;box-shadow:0 4px 35px -5px #4082f5;cursor:pointer}hr{border:1px solid rgba(255,255,255,.1);top:85px}#item,#nicedata{border-radius:3px}a{text-decoration:none}#nicedata{background:#05050c;width:700px;min-height:480px;opacity:0;float:right;box-shadow:0 8px 28px #000;padding:10px}#item{padding:10px 5px;background:#1b1a33;font-size:.6rem}#item strong{font-size:1rem}#item:before{content:'';background:url(data:image/png;base64,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);background-size:cover;width:17px;height:13px;position:absolute;left:-25px}#err{background:#ff6262;padding:3px;border-radius:2px;font-size:.6rem}#nicedata #item{transform:translate3d(0,-100px,0);position:absolute;opacity:0}#nicedata #item.anim{transform:translate3d(0,0,0);opacity:1;position:relative}#nicedata.bg,.login{background:url(https://68.media.tumblr.com/8a90f79fe659fad74559f0bc64934aaa/tumblr_ob43n4qbud1u5vp7wo1_500.gif) center center no-repeat #505050;background-size:cover;display:inline-block;opacity:1}#options.nobg{background:linear-gradient(180deg,#1a4072 0,#23579d)}@media screen and (max-width:1200px){#nicedata{width:600px}}@media screen and (max-width:1100px){#nicedata{width:500px}}@media screen and (max-width:1000px){#nicedata{width:300px}}@media screen and (max-width:800px){#nicedata{width:90%;margin:20px auto;float:none;display:block}.login{max-width:99%;padding:1%;margin:0 auto;display:block}}</style>
+<meta name="Description" content="Бот для golos.io - повторяющий голоса автономный куратор. Работает в браузере.">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<link rel="icon" type="image/x-icon" href="https://golos.io/images/favicons/favicon.ico"/>
+<script data-rocketsrc="https://golos.rubtc.info/wp-content/plugins/golos/golos.js" type="text/rocketscript"></script>
+</head>
+<body>
+<div id="options" class="login">
+<h2 class="active"> Bot Bro </h2>
+<h2 class="nonactive">@vik</h2>
+<form>
+<input id="account" required type="text" class="text" name="account" placeholder="Логин">
+<input id="k" type="password" required class="text" name="password" placeholder="Постинг ключ">
+<br>
+<input id="username" type="text" required class="text" name="username" placeholder="Логин пользователя за которым повторять голоса">
+<input id="minutes" type="number" class="text" name="text" min="1" max="1000000" placeholder="Сколько прошедших минут учесть">
+<input id="votepower" type="number" class="text" name="text" min="0" max="100" placeholder="Повторять только если сила больше ... %">
+</form>
+<button onclick="broBot()" class="signin">
+Запуск голосования
+</button>
+<hr>
+</div>
+<div id="nicedata"></div>
+<script type="text/rocketscript">
+var votepower = 0;
+
+function broBot() {
+    var account = document.getElementById("account").value,
+        k = document.getElementById("k").value,
+        username = document.getElementById("username").value,
+        minutes = document.getElementById("minutes").value,
+        votepower = document.getElementById("votepower").value,
+        time, starttime, t = 1000,
+        period = minutes * 60,
+        utime, start;
+
+    function followVote() {
+        var count = true;
+        steem.api.getDynamicGlobalProperties(function(err, result) {
+            starttime = Date.parse(result.time) / t;
+        });
+        steem.api.getAccountVotes(username, function(err, result) {
+            var a = [];
+            for (var i = 0; i < result.length; i++) {
+                var arr = result,
+                    start = starttime - period,
+                    ap = arr[i].authorperm,
+                    author = ap.substring(0, ap.indexOf('/')),
+                    permlink = ap.substring(ap.indexOf('/')).substring(1),
+                    power = arr[i].percent,
+                    time = arr[i].time;
+                utime = Date.parse(time) / t;
+                if (utime > start) {
+                    a.push({
+                        author: author,
+                        permlink: permlink,
+                        power: power,
+                        utime: utime,
+                        start: start
+                    });
+                }
+            }
+            var summ = a.length;
+
+            var i = 0;
+            var goVote = setInterval(function() {
+                if (count && summ > 0 && a[i].power / 100 >= votepower) {
+                    votehtml = '<div id="item" class="myJson"><a href="https://golos.io/@' + a[i].author + '"><strong>' + a[i].author + '</strong> ' + a[i].permlink + ' <i>' + a[i].power / 100 + '%</i> </a></div>';
+                    document.getElementById('nicedata').insertAdjacentHTML('afterbegin', votehtml);
+                    steem.broadcast.vote(k, account, a[i].author, a[i].permlink, a[i].power, function(err, result) {
+                        console.log(err,result);
+                    });
+                    i++;
+                    itemShow();
+                }
+                if (i == summ) {
+                    count = false;
+                    period = 4;
+                    clearInterval(goVote);
+                    followVote();
+                }
+
+            }, 3000);
+        });
+    }
+    followVote();
+
+    function itemShow() {
+        setTimeout(function() {
+            document.getElementById("item").classList.add('anim');
+        }, 200);
+    }
+    document.getElementById("nicedata").classList.add('bg');
+    document.getElementById("options").classList.add('nobg');
+}
+</script>
+</body>
+</html>
