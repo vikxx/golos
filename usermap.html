@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<title>Местоположение голосят</title>
+<style>
+html * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+article {
+    background: white;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px -5px black;
+}
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 100%;
+  font-family:arial;
+  color: #2d313f;
+  background-color: #e7eaf0;
+  margin:0;
+  padding:0;
+}
+
+header {
+  height: 200px;
+  line-height: 200px;
+  text-align: center;
+  background: #2d313f;
+}
+
+
+
+#google-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background-color: #e7eaf0;
+}
+@media only screen and (min-width: 768px) {
+  #google-container {
+    height: 500px;
+  }
+}
+@media only screen and (min-width: 1170px) {
+  #google-container {
+    height: 600px;
+  }
+}
+
+#cd-google-map {
+  position: relative;
+}
+#cd-google-map address {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 1em 1em;
+      background-color: rgb(255, 255, 255);
+    box-shadow: 0 -5px 5px -6px black;
+    color: #848484;
+  font-size: 13px;
+  font-size: 0.8125rem;
+}
+@media only screen and (min-width: 768px) {
+  #cd-google-map address {
+    font-size: 15px;
+    font-size: 0.9375rem;
+    text-align: center;
+  }
+}
+
+#cd-zoom-in, #cd-zoom-out {
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: rgb(244, 27, 27);
+  background-repeat: no-repeat;
+  background-size: 32px 64px;
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-controller.svg");
+}
+.no-touch #cd-zoom-in:hover, .no-touch #cd-zoom-out:hover {
+  background-color: #d36868;
+}
+@media only screen and (min-width: 768px) {
+  #cd-zoom-in, #cd-zoom-out {
+    margin-left: 50px;
+  }
+}
+
+#cd-zoom-in {
+  background-position: 50% 0;
+  margin-top: 10px;
+  margin-bottom: 1px;
+}
+@media only screen and (min-width: 768px) {
+  #cd-zoom-in {
+    margin-top: 50px;
+  }
+}
+
+#cd-zoom-out {
+  background-position: 50% -32px;
+}
+</style>
+<meta name="Description" content="С помощью исходника данной страницы вы можете вывести на карту местоположения пользователей golos.io">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<link rel="icon" type="image/x-icon" href="https://golos.io/images/favicons/favicon.ico"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaKws1vkLkuxRcvJpYuMfB2drqX8VBoMI&libraries=drawing"></script>
+<script src="https://golos.rubtc.info/g.js"></script>
+</head>
+<body>
+<body>
+<section id="cd-google-map">
+	<div id="google-container"></div>
+	<div id="cd-zoom-in"></div>
+	<div id="cd-zoom-out"></div>
+	<address>Пользователи golos.io на карте. Нажмите на маркер пользователя, что бы увидеть детали</address> 
+</section>
+<script>
+jQuery(document).ready(function($){
+	// Масштаб карты
+	var $map_zoom = 4,
+	    $main_color = '#2d313f',
+		$saturation= -3,
+		$brightness= 50;
+    // Стилизуем карту под golos.io
+	var style= [ 
+		{   elementType: "labels",
+			stylers: [
+				{saturation: $saturation}
+			]
+		},{
+		    featureType: "road",
+			elementType: "geometry.stroke",
+			stylers: [
+				{visibility: "off"}
+			]
+		},{ 
+			featureType: "transit", 
+			elementType: "geometry.fill", 
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},{
+			featureType: "poi",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},{
+			featureType: "poi.government",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},{
+			featureType: "poi.sport_complex",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},
+		{
+			featureType: "poi.attraction",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},
+		{
+			featureType: "poi.business",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},
+		{
+			featureType: "transit",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},
+		{
+			featureType: "transit.station",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},
+		{
+			featureType: "landscape",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+			
+		},
+		{
+			featureType: "road",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},
+		{
+			featureType: "road.highway",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		}, 
+		{
+			featureType: "water",
+			elementType: "geometry",
+			stylers: [
+				
+				{ color: "#60aef5" },
+				{ visibility: "on" }
+			]
+		}
+	];
+  var names =['vood.one','alexna','kuna','dr2073','dhrms','zaria','ropox','radomir'];	
+  var geocoder,map,infowindow,i,marker,address = [],icon=[],username=[];
+  initialize();
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+	infowindow = new google.maps.InfoWindow();
+    var latlng = new google.maps.LatLng(56.0251514,37.0447503);
+    var mapOptions = {
+      center: latlng,
+	  zoom: $map_zoom,
+      	panControl: false,
+      	zoomControl: false,
+      	mapTypeControl: false,
+      	streetViewControl: false,
+      	mapTypeId: google.maps.MapTypeId.ROADMAP,
+      	styles: style
+    }
+    map = new google.maps.Map(document.getElementById("google-container"), mapOptions);
+  }
+steem.api.getAccounts(names, function(err, result) {
+  var count = 0;
+  for (i = 0; i < result.length; i++) {
+  var metas = JSON.parse(result[i].json_metadata);
+  username.push(result[i].name);
+  address.push(metas.profile.location);
+  icon.push(metas.profile.profile_image);
+  geocoder.geocode( {'address': address[i]}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+      var marker = new google.maps.Marker({
+            map: map,
+			visible: true,
+	 	   label: username[count],
+			icon:'https://golos.io/images/favicons/favicon.ico',
+            position: results[0].geometry.location
+		});
+	var infowindow = new google.maps.InfoWindow({content: '<img width="80" style="border-radius:100%;display:block" src="'+icon[count]+'"/> @'+username[count]+' указал локацию: '+address[count]});	 
+	marker.addListener('click', function() {infowindow.open(map, marker);});	
+		}count++
+    });
+  }});
+ 	function CustomZoomControl(controlDiv, map) {
+		var controlUIzoomIn= document.getElementById('cd-zoom-in'),
+	  		controlUIzoomOut= document.getElementById('cd-zoom-out');
+	  	controlDiv.appendChild(controlUIzoomIn);
+	  	controlDiv.appendChild(controlUIzoomOut);
+		google.maps.event.addDomListener(controlUIzoomIn, 'click', function() {
+		    map.setZoom(map.getZoom()+2)
+		});
+		google.maps.event.addDomListener(controlUIzoomOut, 'click', function() {
+		    map.setZoom(map.getZoom()-1)
+		});
+	}
+    var zoomControlDiv = document.createElement('div'),
+ 	zoomControl = new CustomZoomControl(zoomControlDiv, map);
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(zoomControlDiv);
+});
+</script>
+<article>
+<h4>Подробнее в блоге: <a href="https://golos.io/ru--golos/@vik/usermap">golos.io/ru--golos/@vik/usermap</a></h4>
+<h2>Совместив JS API голоса и GoogleMaps удалось сделать интересный плагин, который своим примером может задать вектор для идей разработки и еще на один шаг приблизит голос к росту собственной экосистемы и взаимодействию со множеством сервисов.</h2>
+<p class="help">Канал в телеграмм - <a href="https://web.telegram.org/#/im?p=@viknews">@viknews</a></p>
+<p class="help">Обратная связь - <a href="https://web.telegram.org/#/im?p=@vikxx">@vikxx</a></p>
+</article>
+
+</body>
+</html>
