@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<title>block explorer golos.io</title>
+<meta name="Description" content="block explorer для голоса - golos.io история пользователей голоса в реальном времени">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<style>
+/* https://golos.io/@vik  */
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #2b2b2b url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Procaterol.svg/200px-Procaterol.svg.png);
+    background-position: center;
+    transition: 1s all ease;
+	    background-attachment: fixed;
+}
+body:hover {
+ background-position: left;
+}
+body::-webkit-scrollbar,
+.scrl::-webkit-scrollbar{
+width:7px;height:9px
+}
+body::-webkit-scrollbar-track,
+.scrl::-webkit-scrollbar-track{
+background:#053363
+}
+body::-webkit-scrollbar-thumb,
+.scrl::-webkit-scrollbar-thumb{
+background:rgba(255,255,255,.4)
+}
+h1 {
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 10px 0 0 0;
+    font-size: 5em;
+    text-shadow: 1px 3px 40px #22035a;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+#blockexplr {
+    text-align: center;
+    font-size: 2rem;
+    color: #ffd121;
+    text-shadow: 1px 1px 6px black;
+}
+#sila {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 3px;
+    font-weight: 700;
+}
+#nicedata {
+   position:relative;
+    max-width: 960px;
+    width: 50%;
+    float: left;
+}
+#nicedata #item{
+transition:1s all ease;
+transform:translate3d(0px, -100px, 0px);
+position:absolute;
+opacity:0;
+}
+#nicedata #item.anim{
+transform:translate3d(0px, 0px, 0px);
+opacity:1;
+transition:1s all ease;
+position:relative;
+}
+header {
+    background: #0d0d0d url(https://s27.postimg.org/kj0ro3zcz/d941c938a01d450288d87fdba4e66af176f62c50_m.gif) no-repeat center;
+ text-align:center;
+    color: white;
+    margin: 0;
+    padding: 15px;
+	    box-shadow: 0 0 20px black;
+}
+#result {
+   float:right;
+   width:50%;
+ position:relative;
+font-size:8pt;
+ 
+     margin: 55px auto;
+}
+
+
+.static {
+    text-align: center;
+    margin-bottom: 25px;
+}
+#result #item {
+    background: black;
+    color: white;
+    padding: 5px;
+    line-height: 1;
+    margin: 10px 5px 0;
+}
+
+
+
+.myJson span {
+    background: #315d9e;
+    color: white;
+    border-radius: 3px;
+    padding: 1px 8px;
+    font-weight: 700;
+}
+
+.myJson {
+    background: #ffffff;
+    padding: 15px;
+    word-break: break-word;
+    color: #636363;
+    border-radius: 3px;
+    margin: 40px 15px 0;
+    box-shadow: 0 0 15px black;
+    transition: 1s all ease;
+}
+
+
+
+
+#witness a {
+   
+    color: white;
+    padding: 4px 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+}
+#nicedata {
+    
+    max-width: 960px;
+    margin: 25px auto;
+}
+.myJson a {
+    text-decoration: none;
+    color: white;
+    background: #18d47e;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-weight: 700;
+    box-shadow: 0 0 10px -5px black;
+    text-transform: capitalize;
+    vertical-align: middle;
+}
+.textpost {
+    background: rgba(0, 0, 0, 0.42);
+    padding: 4px 15px;
+    margin: 2px 15px 0;
+    max-height: 100px;
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: .8rem;
+    overflow: auto;
+}
+.textpost h4 {
+    margin: 0 0 3px 0;
+}
+.alert {
+    background: #ff4343;
+    color: white;
+    padding: 20px;
+    margin: 15px;
+    text-align: center;
+    box-shadow: 0 0 20px black;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
+
+input[type="number"] {
+    border: 0;
+    font-size:1.3rem;
+	height:45px;
+    min-width: 200px;
+    border-radius: 3px;
+    box-shadow: inset 0 0px 5px 0px black;
+    background: rgba(130, 130, 130, 0.48);
+    color: white;
+    padding: 0 15px;
+}
+button {
+    background: #1ba77b;
+    box-shadow: 0 0 10px black;
+    border: 0;
+	height:45px;
+    font-weight: 700;
+    color: white;
+    padding: 10px;
+    border-radius: 3px;
+	font-size:1.3rem;
+}
+@media screen and (max-width: 700px) {
+
+h1 {
+    font-size: 2em;
+}
+#blockexplr {
+    font-size: 1.5em;
+}
+#nicedata, #result {
+    width: 100%!important;
+    float: none!important;
+}
+button {
+    display: block;
+    margin: 10px auto;
+}
+}
+</style>
+<style>figure{margin:0}.tmblr-iframe{position:absolute}.tmblr-iframe.hide{display:none}</style><link rel="alternate" href="android-app://com.tumblr/tumblr/x-callback-url/blog?blogName=vikx" /><link rel="alternate" href="ios-app://305343404/tumblr/x-callback-url/blog?blogName=vikx" /><script src="http://assets.tumblr.com/assets/scripts/tumblelog_post_message_queue.js?_v=eaeb98f51ce8ef044da5d23afc31336b"></script><link rel="stylesheet" type="text/css" href="http://assets.tumblr.com/fonts/gibson/stylesheet.css?v=3"><!-- BEGIN TUMBLR FACEBOOK OPENGRAPH TAGS --><!-- If you'd like to specify your own Open Graph tags, define the og:url and og:title tags in your theme's HTML. --><!-- Read more: http://ogp.me/ --><meta property="fb:app_id" content="48119224995" /><meta property="og:title" content="@vik" /><meta property="og:url" content="http://vik.rubtc.info/?og=1" /><meta property="og:description" content="" /><meta property="og:type" content="tumblr-feed:tumblelog" /><meta property="og:image" content="http://68.media.tumblr.com/avatar_7b99a6fbaf03_128.png" /><meta property="al:ios:url" content="tumblr://x-callback-url/blog?blogName=vikx" /><meta property="al:ios:app_name" content="Tumblr" /><meta property="al:ios:app_store_id" content="305343404" /><meta property="al:android:url" content="tumblr://x-callback-url/blog?blogName=vikx" /><meta property="al:android:app_name" content="Tumblr" /><meta property="al:android:package" content="com.tumblr" /><!-- END TUMBLR FACEBOOK OPENGRAPH TAGS --><!-- TWITTER TAGS --><meta charset="utf-8"><meta name="twitter:site" content="tumblr" /><meta name="twitter:card" content="app" /><meta name="twitter:description" content="vikx" /><meta name="twitter:title" content="vikx" /><meta name="twitter:app:name:iphone" content="Tumblr" /><meta name="twitter:app:name:ipad" content="Tumblr" /><meta name="twitter:app:name:googleplay" content="Tumblr" /><meta name="twitter:app:id:iphone" content="305343404" /><meta name="twitter:app:id:ipad" content="305343404" /><meta name="twitter:app:id:googleplay" content="com.tumblr" /><meta name="twitter:app:url:iphone" content="tumblr://x-callback-url/blog?blogName=vikx&amp;referrer=twitter-cards" /><meta name="twitter:app:url:ipad" content="tumblr://x-callback-url/blog?blogName=vikx&amp;referrer=twitter-cards" /><meta name="twitter:app:url:googleplay" content="tumblr://x-callback-url/blog?blogName=vikx&amp;referrer=twitter-cards" /><link rel="canonical" href="http://vik.rubtc.info" /></head>
+<body>
+<header>
+<h1>ws.golos.io</h1>
+<h2 id="blockexplr">Вычисление последнего блока... </h2>
+<div class="static">
+<input id="blockexplorer" type="number" name="quantity" min="1"><button onClick="searchBlock()">Задать стартовый блок</button>
+</div>
+<span id="witness">Выбираем ноду... </span> 
+<span id="merkle">Определяем id блока...</span>
+<article>Это тестовая страница, вы можете забрать исходники или почитать как сделать такую же <a href="https://golos.io/@vik/">golos.io/@vik</a></article>
+</header>
+
+<div id="nicedata"></div><div id="result"><div id="livecoinBannerContainer"></div><script async src="https://livecoin.net/widget/widget?color=ffffff&bgcolor=0a6aa1&currencies%5B%5D=GOLOS&horizontal=1&referralCode=Livecoin-XEz8bXvj"></script></div>
+
+<script>
+// Объявляем переменные
+var socket = new WebSocket('wss://ws.golos.io'), 
+lastblock, startblock;
+// Открываем сокет 
+function connectGolos() {
+socket.onopen = function(event) {
+// Выставляем интервал в 3000 ms
+       setInterval(function() { 
+	   socket.send(JSON.stringify({ // Отправляем запрос
+            id: 1,
+            method: 'get_dynamic_global_properties', // Запрашиваем конкретно эти данные
+            'params': []
+        }));
+		lastblock++;  // Увеличиваем на 1 значение данной переменной при каждом выполнении функции (каждые 3 секунды)                         
+		}, 3000);                               
+}};
+fixblock = true; // Устанавливаем для переменной булево значение - ВКЛ
+function searchBlock() {
+
+            var inputblock = document.getElementById("blockexplorer");
+            var blocknum = inputblock.value;
+            lastblock = blocknum;
+            fixblock = false;
+            connectGolos();
+        }
+
+        function itemShow(){setTimeout(function() {
+                document.getElementById("item").classList.add('anim');
+            }, 200); }
+socket.onmessage = function(event) {
+	var silaGolosa, powerMovement,
+		data = JSON.parse(event.data); // Полученные данные парсим в формат JSON
+        merkle = data.result.transaction_merkle_root; 
+	 if (fixblock) { // Выполнять если fixblock = true (мы указали это за пределами onmessage)
+			startblock = data.result.last_irreversible_block_num; // Получаем номер блока и записываем в переменную
+			lastblock = startblock; // записываем в переменную номер начального блока
+            fixblock = false; //теперь переводим условие в false, и мы больше не сможем менять номер начального блока
+        }
+	 if (data.id === 1  ) { // Если ответ на наш socket.send id 1
+				movementTotal = data.result.total_vesting_shares.split(' ')[0]; /// Движения силы
+                silaTotal = data.result.total_vesting_fund_steem.split(' ')[0]; /// Общее количество силы
+          	socket.send(JSON.stringify({ // Отправляем запрос на получение аккаунта
+                    id: 2, 
+                    method: 'get_accounts', 
+                    params: [
+                        ['vik'] // запрашиваем данные на ник (не обязательно пока, понадобится в другой ситуации)
+                    ]
+                }));
+                socket.send(JSON.stringify({ 
+                    id: 3,
+                    method: 'get_block',
+                    'params': [lastblock]// Отправляем запрос на получение текущего блока
+                }));
+				document.getElementById('blockexplr').innerHTML = ('Исследуемый блок ' + lastblock);
+				}
+				
+	if (data.id === 2) {
+                powerMovement = data.result[0].vesting_shares.split(' ')[0];
+                silaGolosa = silaTotal * (powerMovement / movementTotal);
+               // document.getElementById('sila').innerHTML = ('Ваша сила голоса <span>' + silaGolosa + '</span>');
+
+            }
+	 if (data.id === 3 && merkle !== "0000000000000000000000000000000000000000"){	// Если данные ответа на запрос с id = 3	
+         itemShow();
+		  var fulldata = JSON.stringify(data.result);
+                document.getElementById('result').insertAdjacentHTML('afterbegin', '<div id="item" class="myJson fulldata">' + fulldata + '</div>');
+		  $witness = data.result.witness;
+          $timestamp = data.result.timestamp;
+		 document.getElementById('merkle').innerHTML = ('id <span>' + merkle + '</span> Время блока ' + $timestamp);
+         document.getElementById('witness').innerHTML = ('Делегат <a href="https://golos.io/@' + $witness + '">@' + $witness + '</a>');
+	 
+		tx = data.result.transactions[0].operations[0][1]; // Сокращенный путь до данные> транзакции> операции> 
+		trigger = data.result.transactions[0].operations[0][0]; // Тригер. Определяем коммент, голос, подписку и другое
+		$voter = tx.voter; // Переменная с именем голосующего
+        $power = tx.weight; // Переменная с силой голоса при голосе
+        $author = tx.author; // Автор. Одна переменная на многие виды операций
+        $permlink = tx.permlink; // Ссылка. Так же есть в многих операциях
+		$parent = tx.parent_author; // Автор - родитель поста. Учавствует в комментах
+		$body = tx.body; // Тело коммента или поста
+		$title = tx.title; // Заголовок поста, в комментах пуст
+			if (trigger == 'vote'){ // Если триггер голос
+				votehtml = '<div id="item" class="myJson"><b>'+$voter+'</b> голосует за <span>'+$author+'</span>. Сила '+$power+' </div>'
+				document.getElementById('nicedata').insertAdjacentHTML('afterbegin',votehtml); // Вставляем данные на страницу
+			}
+			if (trigger == 'comment'){ // Если триггер коммент
+				if ($parent !== ""){ // Если родитель поста не пустое место :)
+					  commthtml = '<div id="item" class="myJson">'+$author+' комментирует '+$parent+': '+$body+' </div>'
+					  document.getElementById('nicedata').insertAdjacentHTML('afterbegin',commthtml); // Вставляем html на страницу
+				} else { // А если автор-родитель пуст, то вставим html заточенный под пост, а не комментарии.
+					  posthtml = '<div id="item" class="myJson">'+$author+' разместил пост <h4>'+$title+'</h4>'+$body+'</div>'
+					  document.getElementById('nicedata').insertAdjacentHTML('afterbegin',posthtml);
+				}
+			}
+			if (trigger == 'custom_json'){ // Если триггер custom_json (обычно это фолловинг)
+				var follow = JSON.parse(tx.json)[1], // Получаем данные свойства json внутри custom_json
+					 $follower = follow.follower, // Находим имя фолловера
+					 $followin = follow.following; // Находим имя, на кого подписался фолловер
+				// Придумываем оформление вывода фолловинга
+					follhtml = '<div id="item" class="myJson"><span>'+$follower+'</span> подписка на <b>'+$followin+'</b></div>'
+					document.getElementById('nicedata').insertAdjacentHTML('afterbegin',follhtml);
+			}
+			if (trigger == 'transfer'){ // Если триггер трансфер
+				var	$amount = tx.amount,
+					$from = tx.from,
+					$memo = tx.memo,
+					$to = tx.to;
+					transfhtml = '<div id="item" class="myJson"><b>'+$from+'</b> отправил '+$amount+' <span>'+$to+'</span>\
+					<p><i>'+$memo+'</i></p></div>'
+					document.getElementById('nicedata').insertAdjacentHTML('afterbegin',transfhtml);
+					
+            }
+			
+			if (trigger == 'feed_publish'){
+                     var $publisher = tx.publisher,
+					  $base = tx.exchange_rate.base,
+                      $quote = tx.exchange_rate.quote;
+					  feedhtml = '<div id="item" class="myJson">Прайс фид от <span>'+$publisher+'</span>: '+$base+' = <b>'+$quote+'</b> </div>';
+					  document.getElementById('nicedata').insertAdjacentHTML('afterbegin',feedhtml);
+                	 }
+			if (trigger == 'account_create'){
+				
+				var $newbie = tx.new_account_name,
+					$creator = tx.creator;
+					 newbiehtml = '<div id="item" class="myJson">Новый пользователь <span>'+$newbie+'</span> ('+$creator+') </div>';
+					 document.getElementById('nicedata').insertAdjacentHTML('afterbegin',newbiehtml);
+							 
+                	 }
+					 
+			if (trigger == 'account_update'){
+                     // Обновление аккаунтов
+                	 }		 
+					 
+			if (trigger == 'account_witness_vote'){
+				var $acc = tx.account,
+					$wit = tx.witness;
+					 votewhtml = '<div id="item" class="myJson">'+$acc+' голосует за делегата <span>'+$wit+'</span></div>';
+					 document.getElementById('nicedata').insertAdjacentHTML('afterbegin',votewhtml);
+						
+                	 }
+			}
+	};
+	connectGolos();
+	socket.onerror = function(event) {
+            document.getElementById('nicedata').insertAdjacentHTML('afterbegin', '<div class="alert">На сервере ноды произошла ошибка 502. Переподключение...</div>');
+            setTimeout(location.reload(), 1000); // На голосе часто ошибка 502 - в нашем случае перезагрузим страницу, если встретим такую ошибку.
+            connectGolos();
+        };
+</script>
+</body>
+</html>
