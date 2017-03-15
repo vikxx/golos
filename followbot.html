@@ -7,7 +7,7 @@
 <meta name="Description" content="Бот для golos.io - повторяющий голоса автономный куратор. Работает в браузере.">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 <link rel="icon" type="image/x-icon" href="https://golos.io/images/favicons/favicon.ico"/>
-<script data-rocketsrc="https://golos.rubtc.info/wp-content/plugins/golos/golos.js" type="text/rocketscript"></script>
+<script src="https://golos.rubtc.info/wp-content/plugins/golos/golos.js"></script>
 </head>
 <body>
 <div id="options" class="login">
@@ -27,9 +27,8 @@
 <hr>
 </div>
 <div id="nicedata"></div>
-<script type="text/rocketscript">
+<script>
 var votepower = 0;
-
 function broBot() {
     var account = document.getElementById("account").value,
         k = document.getElementById("k").value,
