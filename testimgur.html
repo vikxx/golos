@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<title>Фотохостинг imgur для голоса</title>
+<meta name="Description" content="Пример работы скрипта фотохостинга на основе imgur">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<link rel="icon" type="image/x-icon" href="https://golos.io/images/favicons/favicon.ico"/>
+<style>img{max-width:100%;height:auto;}body { font-family: Arial, Helvetica, sans-serif; }#text-editor { width: 100%; height: 130px; }#addimg{ padding: 50px 0; text-align: center; background: whitesmoke; font-size: 18px; color: darkgray; box-shadow: inset 0 0 30px -15px black; cursor: pointer; }</style>
+</head>
+<body>
+
+<div id="content">
+
+
+<div class="drdrop">
+<div id="addimg" onclick="document.querySelector('#up').click()"> 
+Нажмите здесь или перетащите файл, что бы загрузить фотографию
+</div>
+</div> 
+<input id="up" style="visibility: collapse; width: 0px;" type="file" onchange="upload(this.files[0])">
+<div id="text-editor">Предполагаемое поле ввода текста. Cюда будет вставлена фотография после загрузки</div>
+</div>
+
+
+
+<script>
+(function() { 'use strict';
+var targetToPasteSelector = "#text-editor";
+window.ondragover = function(e) {e.preventDefault();};
+window.ondrop = function(e) {e.preventDefault(); upload(e.dataTransfer.files[0]); };
+window.upload = function(file) {
+        if (!file || !file.type.match(/image.*/)) return;
+        var fd = new FormData(); 
+        fd.append("image", file); 
+        var xhr = new XMLHttpRequest(); 
+        xhr.open("POST", "https://api.imgur.com/3/image.json"); 
+        xhr.onload = function() {
+            var imgurl = JSON.parse(xhr.responseText).data.link;
+			var ed = document.querySelector(targetToPasteSelector);
+			ed.insertAdjacentHTML('afterbegin','<img src="'+imgurl+'"/>');
+	    };
+        xhr.setRequestHeader('Authorization', 'Client-ID 28aaa2e823b03b1');xhr.send(fd);
+    }
+})();
+</script>
+</body>
+</html>	
