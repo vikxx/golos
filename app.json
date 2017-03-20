@@ -1,0 +1,16 @@
+{
+  "name": "golos",
+  "description": "test",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
